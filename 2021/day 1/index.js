@@ -18,7 +18,6 @@ async function get_result() {
             
             // Part 2
             increased = 0;
-            const map = {};
             let previousSum = 0;
             for (let i = 0; i < arr.length - 2; ++i) {
                 let sum = 0;
