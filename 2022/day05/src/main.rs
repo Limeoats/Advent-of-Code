@@ -28,6 +28,7 @@ fn part1() {
     let mut stacks: Vec<Vec<char>> = vec![vec![]];
     let mut instructions: Vec<Instruction> = vec![];
     let mut mode: Mode = Mode::Top;
+    let mut instr: Instruction;
 
     for line in lines.flatten() {
         if !line.trim().is_empty() && line.chars().nth(1).unwrap() == '1' {
@@ -52,12 +53,12 @@ fn part1() {
                 .step_by(2)
                 .map(|s| s.parse::<i32>().unwrap())
                 .collect::<Vec<i32>>();
-            let inst = Instruction {
+            instr = Instruction {
                 count: inst_v[0],
                 original_stack: inst_v[1],
                 new_stack: inst_v[2],
             };
-            instructions.push(inst.clone());
+            instructions.push(instr);
         }
     }
 
@@ -79,6 +80,7 @@ fn part2() {
     let mut stacks: Vec<Vec<char>> = vec![vec![]];
     let mut instructions: Vec<Instruction> = vec![];
     let mut mode: Mode = Mode::Top;
+    let mut instr: Instruction;
 
     for line in lines.flatten() {
         if !line.trim().is_empty() && line.chars().nth(1).unwrap() == '1' {
@@ -103,12 +105,12 @@ fn part2() {
                 .step_by(2)
                 .map(|s| s.parse::<i32>().unwrap())
                 .collect::<Vec<i32>>();
-            let inst = Instruction {
+            instr = Instruction {
                 count: inst_v[0],
                 original_stack: inst_v[1],
                 new_stack: inst_v[2],
             };
-            instructions.push(inst.clone());
+            instructions.push(instr);
         }
     }
 
