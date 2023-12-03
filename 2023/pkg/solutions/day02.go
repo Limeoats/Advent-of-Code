@@ -19,58 +19,62 @@ type game struct {
 	pulls []pull
 }
 
+func parseGames() []game {
+	file, err := os.Open("data/day02_data.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+
+	games := []game{}
+
+	for scanner.Scan() {
+		var g game
+
+		// Parse the id
+		s1 := strings.Split(scanner.Text(), ": ")
+		id := strings.Split(s1[0], " ")[1]
+		idInt, err := strconv.Atoi(id)
+		if err != nil {
+			log.Fatal(err)
+		}
+		g.id = idInt
+
+		// Parse the pulls
+		p1 := strings.Split(s1[1], "; ")
+		for _, p := range p1 {
+			var pull pull
+			types := strings.Split(p, ", ")
+			for _, t := range types {
+				items := strings.Split(t, " ")
+				n, err := strconv.Atoi(items[0])
+				if err != nil {
+					log.Fatal(err)
+				}
+				if items[1] == "blue" {
+					pull.blue = n
+				} else if items[1] == "red" {
+					pull.red = n
+				} else if items[1] == "green" {
+					pull.green = n
+				}
+			}
+			g.pulls = append(g.pulls, pull)
+		}
+		games = append(games, g)
+	}
+	return games
+}
+
 func Day02() (string, string) {
 	p1Ans := 0
 	p2Ans := 0
 
 	// Part 1
 	{
-		file, err := os.Open("data/day02_data.txt")
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer file.Close()
-
-		scanner := bufio.NewScanner(file)
-
-		games := []game{}
-
-		for scanner.Scan() {
-			var g game
-
-			// Parse the id
-			s1 := strings.Split(scanner.Text(), ": ")
-			id := strings.Split(s1[0], " ")[1]
-			idInt, err := strconv.Atoi(id)
-			if err != nil {
-				log.Fatal(err)
-			}
-			g.id = idInt
-
-			// Parse the pulls
-			p1 := strings.Split(s1[1], "; ")
-			for _, p := range p1 {
-				var pull pull
-				types := strings.Split(p, ", ")
-				for _, t := range types {
-					items := strings.Split(t, " ")
-					n, err := strconv.Atoi(items[0])
-					if err != nil {
-						log.Fatal(err)
-					}
-					if items[1] == "blue" {
-						pull.blue = n
-					} else if items[1] == "red" {
-						pull.red = n
-					} else if items[1] == "green" {
-						pull.green = n
-					}
-				}
-				g.pulls = append(g.pulls, pull)
-			}
-			games = append(games, g)
-		}
-
+		games := parseGames()
 		for _, game := range games {
 			// add up all blues
 			validGame := true
@@ -88,52 +92,7 @@ func Day02() (string, string) {
 
 	// Part 2
 	{
-		file, err := os.Open("data/day02_data.txt")
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer file.Close()
-
-		scanner := bufio.NewScanner(file)
-
-		games := []game{}
-
-		for scanner.Scan() {
-			var g game
-
-			// Parse the id
-			s1 := strings.Split(scanner.Text(), ": ")
-			id := strings.Split(s1[0], " ")[1]
-			idInt, err := strconv.Atoi(id)
-			if err != nil {
-				log.Fatal(err)
-			}
-			g.id = idInt
-
-			// Parse the pulls
-			p1 := strings.Split(s1[1], "; ")
-			for _, p := range p1 {
-				var pull pull
-				types := strings.Split(p, ", ")
-				for _, t := range types {
-					items := strings.Split(t, " ")
-					n, err := strconv.Atoi(items[0])
-					if err != nil {
-						log.Fatal(err)
-					}
-					if items[1] == "blue" {
-						pull.blue = n
-					} else if items[1] == "red" {
-						pull.red = n
-					} else if items[1] == "green" {
-						pull.green = n
-					}
-				}
-				g.pulls = append(g.pulls, pull)
-			}
-			games = append(games, g)
-		}
-
+		games := parseGames()
 		for _, game := range games {
 			maxRed, maxGreen, maxBlue := 0, 0, 0
 			for _, pull := range game.pulls {
