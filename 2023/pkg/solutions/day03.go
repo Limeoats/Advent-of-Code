@@ -74,6 +74,7 @@ func Day03() (string, string) {
 			}
 		}
 	}
+
 	// Part 1
 	{
 		for _, rn := range rowNumbers {
@@ -128,7 +129,6 @@ func Day03() (string, string) {
 
 	// Part 2
 	{
-		// Now that we know where all the numbers are, find asterisks.
 		for ir, row := range arr {
 			for j := 0; j < len(row); j++ {
 				c := row[j]
@@ -137,12 +137,6 @@ func Day03() (string, string) {
 				}
 
 				var touched []int
-				// We have an asterisk so look around and see if it touches
-				// at least two different numbers that aren't part of the same
-				// whole number.
-				// To do this, we'll loop through all numbers and see if
-				// any touch the asterisk. This should be easier than doing
-				// it the other way around.
 				for _, rn := range rowNumbers {
 					var nums []rune
 					touches := false
