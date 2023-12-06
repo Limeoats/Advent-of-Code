@@ -74,7 +74,6 @@ func Day03() (string, string) {
 			}
 		}
 	}
-
 	// Part 1
 	{
 		for _, rn := range rowNumbers {
